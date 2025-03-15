@@ -21,8 +21,24 @@ const app = express();
 // middlewares
 app.use(express.json())
 app.use(cookieParser());
-app.use(cors({ origin: ["https://customer-online-banking.vercel.app", "http://localhost:5175"], credentials: true }));
 
+const allowedOrigins = [
+    "https://customer-online-banking.vercel.app", // Production frontend
+    "http://localhost:5175", // Local development
+];
+
+app.use(
+    cors({
+        origin: (origin, callback) => {
+            if (!origin || allowedOrigins.includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error("Not allowed by CORS"));
+            }
+        },
+        credentials: true, // Allow credentials (cookies)
+    })
+);
 
 
 //API Handlers

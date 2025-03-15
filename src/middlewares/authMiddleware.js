@@ -5,6 +5,7 @@ const User = require("../models/userModel")
 const userAuth = async (req, res, next) => {
     try {
         const { token } = req.cookies;
+        console.log(req.cookies)
         if (!token) {
             console.log(token + "this is the token")
             throw new Error("Session Timeout: Please Log In!");

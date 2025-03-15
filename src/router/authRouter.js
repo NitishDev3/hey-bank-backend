@@ -45,10 +45,15 @@ authRouter.post("/login", async (req, res) => {
             throw new Error("Invalid Credentials");
         } else {
             const token = jwt.sign({ id: user._id }, "Heybank@789", { expiresIn: "1d" });
-            res.cookie("token", token, { expires: new Date(Date.now() + 86400000), httpOnly: true, secure: false });
+            res.cookie("token", token, {
+                expires: new Date(Date.now() + 86400000), // 1 day
+                httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
+                secure: process.env.NODE_ENV === "production", // Send cookie only over HTTPS in production
+                sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Allow cross-origin cookies in production
+            });
             //donot send password in response
             user.password = undefined;
-            res.json({ message: "Log In Successful", data : user });
+            res.json({ message: "Log In Successful", data: user });
         }
     } catch (error) {
         res.status(400).json({ message: error.message });
