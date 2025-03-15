@@ -4,8 +4,10 @@
   "description": "backend of hey bank",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/app.js",
-    "dev": "nodemon ./src/app.js"
+    "start": "node src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node_modules/.bin/esbuild src/app.js --bundle --outfile=dist/bundle.js --platform=node --format=cjs",
+    "dev": "nodemon src/app.js"
   },
   "author": "nitish.dev",
   "license": "ISC",
