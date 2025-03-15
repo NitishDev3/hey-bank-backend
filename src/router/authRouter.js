@@ -45,6 +45,7 @@ authRouter.post("/login", async (req, res) => {
             throw new Error("Invalid Credentials");
         } else {
             const token = jwt.sign({ id: user._id }, "Heybank@789", { expiresIn: "1d" });
+            console.log("rnv : " + process.env.NODE_ENV )
             res.cookie("token", token, {
                 expires: new Date(Date.now() + 86400000), // 1 day
                 httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
