@@ -19,9 +19,10 @@ const transactionRouter = require("./router/transactionRouter");
 const app = express();
 
 // middlewares
-app.use(cors({ origin: "https://customer-online-banking.vercel.app", credentials: true }));
 app.use(express.json())
 app.use(cookieParser());
+app.use(cors({ origin: ["https://customer-online-banking.vercel.app", "http://localhost:5175"], credentials: true }));
+
 
 
 //API Handlers
