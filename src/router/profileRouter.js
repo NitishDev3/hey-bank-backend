@@ -28,10 +28,10 @@ profileRouter.patch("/profile/update", userAuth, async (req, res) => {
         //get logged in user
         const loggedInUserId = req.user._id;
 
-        //update
-        const updatedUser = await User.findOneAndUpdate(loggedInUserId, req.body);
+        //update user and get the post save data
+        const updatedUser = await User.findOneAndUpdate(loggedInUserId, req.body, { new: true }).select("-password -__v -createdAt -updatedAt");
 
-        res.json({ message: "Profile Updated Successfully" })
+        res.json({ message: "Profile Updated Successfully", data: updatedUser });
     } catch (error) {
         res.status(400).json({ message: error.message })
     }

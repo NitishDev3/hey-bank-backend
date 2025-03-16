@@ -1,6 +1,6 @@
 const express = require("express");
 const { userAuth } = require("../middlewares/authMiddleware");
-const Transaction = require("../models/transactionModel");
+const Transaction = require("../models/tracsantionModel");
 const Account = require("../models/accountModel");
 const accountRouter = require("./accountRouter");
 const bcrypt = require("bcrypt");

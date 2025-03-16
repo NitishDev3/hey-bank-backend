@@ -55,7 +55,7 @@ const userSchema = new mongoose.Schema({
 //isProfileCompleted will be true if all the required fields are present in the user profile
 userSchema.pre('findOneAndUpdate', function (next) {
     const update = this.getUpdate();
-    const requiredFields = ["age", "gender", "city", "profilePhotoUrl"];
+    const requiredFields = ["age", "gender", "city"];
     const isComplete = requiredFields.every(field => update[field] || this._update[field]);
     update.isProfileCompleted = isComplete;
     next();

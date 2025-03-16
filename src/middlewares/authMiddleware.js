@@ -5,12 +5,10 @@ const User = require("../models/userModel")
 const userAuth = async (req, res, next) => {
     try {
         const { token } = req.cookies;
-        console.log(req.cookies)
         if (!token) {
-            console.log(token + "this is the token")
             throw new Error("Session Timeout: Please Log In!");
         }
-        const { id } = jwt.verify(token, "Heybank@789");
+        const { id } = jwt.verify(token, process.env.JWT_SECRET);
 
         const user = await User.findById({ _id: id }).select("-password -__v -createdAt -updatedAt");
         if (!user) {
