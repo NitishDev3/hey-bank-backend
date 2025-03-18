@@ -62,7 +62,16 @@ authRouter.post("/login", async (req, res) => {
 });
 
 authRouter.post("/logout", (req, res) => {
-    res.clearCookie("token", { httpOnly: true, secure: true }).json({ message: "Log Out Successful" });
+    // Clear the token cookie
+    res.clearCookie("token", {
+        httpOnly: true, // Ensure this matches the cookie settings
+        secure: process.env.NODE_ENV === "production", // Send cookie only over HTTPS in production
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Allow cross-origin cookies in production
+    });
+
+    // Send a success response
+    res.status(200).json({ message: "Log Out Successful" });
 });
+
 
 module.exports = authRouter;
